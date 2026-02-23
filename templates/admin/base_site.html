@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+
+{% block branding %}
+<h1 id="site-name">
+    🏥 Sistema Botica PRO
+</h1>
+{% endblock %}
+
+{% block nav-global %}
+
+{% if productos_bajo and productos_bajo > 0 %}
+<div style="
+    background:#ff4d4d;
+    color:white;
+    padding:10px;
+    text-align:center;
+    font-weight:bold;
+">
+    ⚠ ALERTA: {{ productos_bajo }} productos con STOCK BAJO
+</div>
+{% endif %}
+
+{% endblock %}

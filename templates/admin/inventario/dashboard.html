@@ -1,0 +1,37 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+
+<h1>📊 Dashboard General</h1>
+
+<div style="padding:20px;background:#f8f9fa;border-radius:12px;margin-bottom:20px;">
+
+    <h3>💰 Ventas</h3>
+    <p><strong>Ventas Hoy:</strong> S/ {{ total_hoy }}</p>
+    <p><strong>Ventas Mes:</strong> S/ {{ total_mes }}</p>
+
+</div>
+
+<div style="padding:20px;background:#ffffff;border-radius:12px;margin-bottom:20px;">
+    <h3>🏆 Top 5 Productos Más Vendidos</h3>
+    <ul>
+        {% for p in top_productos %}
+            <li>{{ p.producto__nombre }} - {{ p.total_vendido }} unidades</li>
+        {% empty %}
+            <li>No hay ventas aún.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div style="padding:20px;background:#fff3f3;border-radius:12px;">
+    <h3>⚠ Productos con Stock Bajo</h3>
+    <ul>
+        {% for s in productos_stock_bajo %}
+            <li>{{ s.producto.nombre }} (Stock: {{ s.stock }})</li>
+        {% empty %}
+            <li>No hay productos con stock bajo.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

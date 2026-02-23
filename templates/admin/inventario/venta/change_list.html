@@ -1,0 +1,81 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+<h1 style="margin-bottom:15px;">📊 Panel de Ventas</h1>
+
+<div style="
+    margin:15px 0;
+    padding:20px;
+    background:#f8f9fa;
+    border-radius:12px;
+    border:1px solid #ddd;
+    font-size:15px;
+">
+
+    💰 <strong>Ventas Hoy:</strong> S/ {{ total_hoy }} |
+    🧾 <strong>Cantidad Hoy:</strong> {{ cantidad_hoy }} |
+    📅 <strong>Ventas Mes:</strong> S/ {{ total_mes }}
+
+    <br><br>
+
+    📈 <strong>Ganancia Hoy:</strong> S/ {{ ganancia_hoy }} |
+    🚀 <strong>Ganancia Mes:</strong> S/ {{ ganancia_mes }}
+
+</div>
+
+<div style="
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:25px;
+    border:1px solid #eee;
+">
+    <h3 style="margin-bottom:20px;">📈 Ventas últimos 7 días</h3>
+    <canvas id="ventasChart" height="100"></canvas>
+</div>
+
+{% endblock %}
+
+
+{% block extrahead %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+
+{% block footer %}
+{{ block.super }}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('ventasChart');
+
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ labels_7_dias|safe }},
+                datasets: [{
+                    label: 'Ventas (S/)',
+                    data: {{ data_7_dias|safe }},
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    }
+
+});
+</script>
+
+{% endblock %}

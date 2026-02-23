@@ -1,0 +1,30 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+<h1>Stock por Sucursal</h1>
+
+{% if productos_bajo > 0 %}
+<div style="
+    background:#ffe6e6;
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #ff4d4d;
+    margin-bottom:20px;
+    font-weight:bold;
+    color:#cc0000;
+">
+    🔴 {{ productos_bajo }} productos con stock bajo
+</div>
+{% endif %}
+
+{% endblock %}
+actions = ["reponer_stock"]
+
+def reponer_stock(self, request, queryset):
+    for stock in queryset:
+        stock.stock = stock.stock_minimo + 10
+        stock.save()
+
+    self.message_user(request, "Stock repuesto automáticamente.")
+
+reponer_stock.short_description = "📦 Reponer automáticamente"
